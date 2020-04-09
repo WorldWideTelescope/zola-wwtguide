@@ -1,0 +1,27 @@
+# This template is referenced in the repositories for various WWT guides to
+# define their CI/CD mechanism. Note that while the guides include this
+# repository as a Git submodule, Azure Pipelines doesn't support that, so it
+# is possible that the version of this file used by Pipelines won't be in sync
+# with what the guide repository expects.
+
+parameters:
+- name: 'vmImage'
+  default: 'ubuntu 16.04'
+  type: string
+- name: 'zolaVersion'
+  default: '0.10.1'
+  type: string
+
+jobs:
+- job: Build and maybe publish
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+  steps:
+
+  - script: |
+      curl https://github.com/getzola/zola/releases/download/v${{ parameters.zolaVersion }}/zola-v${{ parameters.zolaVersion }}-x86_64-unknown-linux-gnu.tar.gz |tar x
+    displayName: Install Zola
+
+  - script: |
+      ./zola build
+    displayName: Build site
