@@ -10,6 +10,14 @@
 parameters:
 - name: 'azureServiceConnectionName'
   type: string
+- name: 'cdnProfileName'
+  type: string
+- name: 'cdnPubPrefix'
+  type: string
+- name: 'cdnEndpointName'
+  type: string
+- name: 'cdnResourceGroupName'
+  type: string
 - name: 'containerName'
   default: '$web'
   type: string
@@ -60,3 +68,16 @@ jobs:
       storage: ${{ parameters.storageAccountName }}
       ContainerName: ${{ parameters.containerName }}
       blobPrefix: ${{ parameters.pubPrefix }}
+
+  - task: AzurePowerShell@4
+    displayName: Purge CDN
+    inputs:
+      azureSubscription: ${{ parameters.azureServiceConnectionName }}
+      azurePowerShellVersion: 'LatestVersion'
+      scriptType: 'inlineScript'
+      inline: |
+        Unpublish-AzCdnEndpointContent `
+          -ProfileName ${{ parameters.cdnProfileName }} `
+          -ResourceGroupName ${{ parameters.cdnResourceGroupName }} `
+          -EndpointName ${{ parameters.cdnEndpointName }} `
+          -PurgeContent '${{ parameters.cdnPubPrefix }}/*'
