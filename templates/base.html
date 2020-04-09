@@ -1,4 +1,15 @@
 {%- import "macros.html" as macros -%}
+{# Jumping through hoops to get a relative path to the site root #}
+{%- if current_path == "/" -%}
+  {%- set_global rel_top = "./" -%}
+{%- else -%}
+  {%- set_global rel_top_work = [] -%}
+  {%- for _ignored in current_path | split(pat="/") | slice(start=1) -%}
+    {%- set_global rel_top_work = rel_top_work | concat(with="..") -%}
+  {%- endfor -%}
+  {%- set_global rel_top = rel_top_work | join(sep="/") -%}
+  {%- set_global rel_top = rel_top ~ "/" -%}
+{%- endif -%}
 <!DOCTYPE html>
 <html lang="en" class="sidebar-visible">
   <head>
@@ -10,8 +21,8 @@
     {% block js %}
     {% endblock js %}
     {% block css %}
-    <link rel="stylesheet" href="{{ get_url(path='wwtguide.css') | safe }}">
-    <link rel="stylesheet" href="{{ get_url(path='assets/font-awesome.min.css') | safe }}">
+    <link rel="stylesheet" href="{{ rel_top ~ 'wwtguide.css' | safe }}">
+    <link rel="stylesheet" href="{{ rel_top ~ 'assets/font-awesome.min.css' | safe }}">
     {% endblock css %}
     {% block extra_head %}
     {% endblock extra_head %}
@@ -25,7 +36,7 @@
       // XXXX hardcoding break size. Also, note that we use this variable in
       // some inline JavaScript later in the file.
       var sidebar = (document.body.clientWidth < 1080) ? 'hidden' : 'visible';
-      
+
       if (sidebar === 'hidden') {
         html.classList.remove('sidebar-visible');
         html.classList.add("sidebar-hidden");
@@ -46,14 +57,14 @@
             <ul>
               <li>
                 <a {% if current_path == "/" %}class="active"{% endif %}
-                   href="{{ get_url(path="", trailing_slash=true) | safe }}">{{ config.title }}</a>
-                
+                   href="{{ rel_top | safe }}">{{ config.title }}</a>
+
                 <ul>
                   {% set index = get_section(path="_index.md") %}
                   {% for page in index.pages %}
                   <li>
                     <a {% if current_path == page.path %}class="active"{% endif %}
-                       href="{{ page.permalink | safe }}">{{ page.title }}</a>
+                       href="{{ rel_top ~ page.path | safe }}">{{ page.title }}</a>
                   </li>
                   {% endfor %}
                 </ul>
@@ -74,7 +85,7 @@
 
           <nav role="navigation">
             <ul>
-              <li><a href="{{ config.extra.github_base }}">GitHub Repository</a></li>
+              <li><a href="{{ config.extra.github_base | safe }}">GitHub Repository</a></li>
               <li><a href="//docs.worldwidetelescope.org/">WWT Docs Home</a></li>
               <li><a href="//worldwidetelescope.org/About">About WWT</a></li>
               <li><a href="//aas.org/about-aas">About AAS</a></li>
@@ -107,7 +118,7 @@
           <h1 class="menu-title">{{ config.title }}</h1>
 
           <div class="right-buttons">
-            <a href="{{config.extra.github_base}}" title="Git repository" aria-label="Git repository">
+            <a href="{{config.extra.github_base | safe}}" title="Git repository" aria-label="Git repository">
               <i id="git-repository-button" class="fa fa-github"></i>
             </a>
           </div>
@@ -140,7 +151,7 @@
     </div>
 
     {% block js_body %}
-    <script type="text/javascript" src="{{ get_url(path='assets/wwtguide.js') | safe }}"></script>
+    <script type="text/javascript" src="{{ rel_top ~ 'assets/wwtguide.js' | safe }}"></script>
     {% endblock js_body %}
   </body>
 </html>
