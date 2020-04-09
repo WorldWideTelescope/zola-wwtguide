@@ -1,0 +1,12 @@
+name = "wwtguide"
+description = "A theme for AAS WorldWide Telescope documentation"
+license = "MIT"
+homepage = "https://github.com/WorldWideTelescope/zola-wwtguide"
+min_version = "0.10.0"
+# demo = ""
+
+[extra]
+
+[author]
+name = "Peter K. G. Williams"
+homepage = "https://newton.cx/~peter/"

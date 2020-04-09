@@ -1,0 +1,107 @@
+{%- import "macros.html" as macros -%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+    <!--[if IE]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    {% block js %}
+    {% endblock js %}
+    {% block css %}
+    <link rel="stylesheet" href="{{ get_url(path="wwtguide.css") | safe }}">
+    {% endblock css %}
+    {% block extra_head %}
+    {% endblock extra_head %}
+  </head>
+
+  <body>
+    <div class="header-bg">
+    </div>
+
+    <div class="wrapper">
+      <div class="hl-nav side-nav">
+        <div class="sidebar-scrollbox">
+          {% block before_menu %}
+          {% endblock before_menu %}
+
+          <p class="side-nav-label">Table of Contents</p>
+
+          <nav role="navigation">
+            <ul>
+              {% block menu %}
+              {% set index = get_section(path="_index.md") %}
+              {% for page in index.pages %}
+              <li {% if current_path == page.path %}class="active"{% endif %}>
+                <a class="noul" href="{{ page.permalink }}">
+                  {% if config.extra.book_number_chapters %}<strong>{{ chapter_num }}.{{ loop.index }}.</strong>{% endif %}
+                  {{ page.title }}
+                </a>
+              </li>
+              {% endfor %}
+              {% endblock menu %}
+            </ul>
+          </nav>
+          {% block after_menu %}
+          {% endblock after_menu %}
+        </div>
+      </div>
+
+      <div class="content-col">
+        <header>
+          <a href="{{ get_url(path="", trailing_slash=true) | safe }}">
+            <img class="header-logo-lg" src="{{ get_url(path='assets/stacked-logo-black-on-transparent-260x103.png') | safe }}">
+            <img class="header-logo-sm" src="{{ get_url(path='assets/wwt-globe.png') | safe }}">
+          </a>
+        </header>
+
+        <div class="mobile-sidebar-controls">
+          <a id="hl-furl-btn" class="pull-left noul" href="#">« Table of Contents</a>
+          <a id="ll-furl-btn" class="pull-right noul" href="#">In This Page »</a>
+        </div>
+
+        <script>
+          document.querySelector("#hl-furl-btn").addEventListener("click", function() {
+            document.querySelector(".hl-nav").classList.toggle("unfurled");
+          });
+          document.querySelector("#ll-furl-btn").addEventListener("click", function() {
+            document.querySelector(".ll-nav").classList.toggle("unfurled");
+          });
+        </script>
+
+        <main>
+        {% block content %}
+        {% endblock content %}
+        </main>
+
+        <div class="prev-link">
+          {% block prev_link %}
+          {% endblock prev_link %}
+        </div>
+
+        <div class="next-link">
+          {% block next_link %}
+          {% endblock next_link %}
+        </div>
+
+        <footer>
+          <p>Copyright {{ now() | date(format="%Y") }} AAS. Site generated
+            with <a href="https://www.getzola.org/">Zola</a>.</p>
+        </footer>
+      </div>
+
+      <div class="ll-nav side-nav">
+        <div class="sidebar-scrollbox">
+          {% block lowlevelnav %}
+          {% endblock %}
+        </div>
+      </div>
+
+    </div> <!-- .wrapper -->
+
+    {% block js_body %}
+    <script type="text/javascript" src="{{ get_url(path='assets/wwtguide.js') | safe }}"></script>
+    {% endblock js_body %}
+  </body>
+</html>

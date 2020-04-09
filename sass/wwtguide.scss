@@ -1,0 +1,283 @@
+@charset "utf-8";
+@import "normalize";
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+// Typography
+
+@font-face {
+  font-family: "UniversLTPro";
+  src: url("/assets/39762C_0_0.eot?#iefix") format("embedded-opentype"), url("/assets/39762C_0_0.woff2") format("woff2"), url("/assets/39762C_0_0.woff") format("woff"), url("/assets/39762C_0_0.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "UniversLTPro";
+  src: url("/assets/39762C_2_0.eot?#iefix") format("embedded-opentype"), url("/assets/39762C_2_0.woff2") format("woff2"), url("/assets/39762C_2_0.woff") format("woff"), url("/assets/39762C_2_0.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+// Breakpoints for responsive CSS media queries. For reference, Boostrap uses:
+//
+// extra-small  < 576px  <~26em  smartphone in portrait
+// small        < 768px  <~35em  smartphone, landscape
+// medium       < 992px  <~45em  tablet (portrait?)
+// large        <1200px  <~55em  reasonable desktop
+// extra-large  >1200px  >~55em  large desktop
+//
+// (Here, the "em" measurements use our adopted fiducial conversion of 1em =
+// 22px; see below.) But we don't care about such fine gradations, so we keep
+// it more reasonable.
+
+$header-height: 111px; // desktop logo is 103px high; 4px padding
+$sidebar-width: 300px;
+$max-content-width: 792px; // =36rem
+$content-break-width: 528px; // =24rem
+$breakpoint: $sidebar-width + $content-break-width + $sidebar-width;
+
+// Top-level setup
+
+html {
+  height: 100%;
+
+  // Default font sizes are too small, I think. At a standard 1em = 16px,
+  // 1.375em becomes 22px.
+  font-size: 1.375em;
+  font-family: "UniversLTPro";
+
+  // The viewport width changes slightly if there's a scrollbar or now,
+  // causing the layout to shift when navigating between long and short
+  // pages. There are a few ways to try to deal with this, but here I
+  // just force there to always be a scrollbar.
+  overflow-y: scroll;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  line-height: 1.6;
+
+  background: #fff;
+  color: #111;
+}
+
+// Page layout
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $header-height;
+  background: #eee;
+  border-bottom: 1px solid #ccc;
+  z-index: -100;
+}
+
+.wrapper {
+  max-width: $sidebar-width + $max-content-width + $sidebar-width;
+  margin: 0 auto;
+
+  @media screen and (min-width: $breakpoint) {
+    // In desktop mode, we use CSS Grids to show everything side-by-side
+    display: grid;
+    grid-template-columns: $sidebar-width 1fr $sidebar-width;
+    grid-gap: 0.6rem;
+  }
+}
+
+.mobile-sidebar-controls {
+  height: 39px; // $header-height - (height of wwt-logo.png) - 2 * 4px padding
+  font-size: 80%;
+  font-weight: 700;
+
+  @media screen and (min-width: $breakpoint) {
+    display: none;
+  }
+
+  a {
+    margin-top: 4px;
+  }
+}
+
+.side-nav {
+  // monkey-see-monkey-do scrollbox stuff
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  line-height: 1.0;
+  font-size: 85%;
+
+  .side-nav-label {
+    font-weight: 700;
+    margin: 0.2rem 0;
+
+    @media screen and (max-width: $breakpoint) {
+      // Superseded by the header buttons in mobile
+      display: none;
+    }
+  }
+
+  ul {
+    list-style: square;
+    padding-left: 1.2rem;
+    margin: 0.2rem 0;
+
+    li.active {
+      font-weight: 700;
+    }
+  }
+
+  @media screen and (max-width: $breakpoint) {
+    // In mobile mode, the side nav positions are fixed and transformed
+    // offscreen
+    width: $sidebar-width;
+    position: fixed;
+    top: $header-height;
+    bottom: 0;
+    transform: translateX(-$sidebar-width);
+    background: #f8f8f8;
+  }
+
+  @media screen and (min-width: $breakpoint) {
+    // If we're not absolutely positioning, move below the header this way:
+    margin-top: $header-height;
+  }
+}
+
+.hl-nav {
+  @media screen and (max-width: $breakpoint) {
+    // mobile hl nav: left
+    left: 0;
+    transform: translateX(-$sidebar-width);
+    transition: transform 0.3s ease;
+    border-right: 1px solid #ccc;
+  }
+}
+
+.ll-nav {
+  @media screen and (max-width: $breakpoint) {
+    // mobile ll nav: right
+    right: 0;
+    transform: translateX($sidebar-width);
+    transition: transform 0.3s ease;
+    border-left: 1px solid #ccc;
+  }
+}
+
+// Note: this must come after the transforms on .hl-nav and .ll-nav to override them!
+.unfurled {
+  transform: translateX(0);
+}
+
+.sidebar-scrollbox {
+  // monkey-see-monkey-do
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.content-col {
+  @media screen and (max-width: $breakpoint) {
+    // In mobile mode, pad a little bit around the edges
+    padding: 0 0.3rem;
+
+    // Limiting width and centering gives nice layout continuity across the
+    // transition point.
+    max-width: $content-break-width;
+    margin: 0 auto;
+  }
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+main {
+  margin-top: 1rem;
+}
+
+// Header.
+
+header {
+  nav {
+    display: flex;
+    flex-flow: row nowrap;
+
+    div {
+      display: flex;
+      flex-basis: auto;
+      flex-grow: 1;
+      align-items: center;
+
+      ul {
+        list-style: none;
+        flex-direction: row;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        margin: 0 0 0 auto;
+        padding: 0;
+
+        li {
+          margin: 0 0.2rem;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+
+.header-logo-lg {
+  display: block;
+  width: 260px;
+  margin: 4px 0;
+
+  @media screen and (max-width: $breakpoint) {
+    display: none;
+  }
+}
+
+.header-logo-sm {
+  display: none;
+  margin: 4px 0;
+
+  @media screen and (max-width: $breakpoint) {
+    display: block;
+  }
+}
+
+// The footer.
+
+footer {
+  width: 100%;
+  font-size: 60%;
+  margin: 1rem 0 0 0;
+  border-top: 1px solid #ccc;
+  padding-top: 0.3rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+// The main content area of each page.
+
+div.content {
+  width: 100%;
+  margin-top: 1rem;
+
+  // This line-height is very generous, but the W3C apparently recommends a
+  // value at least this large for body text for accessibility reasons.
+  line-height: 1.5;
+}
+
+@import "content";
