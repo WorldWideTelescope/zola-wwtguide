@@ -13,7 +13,7 @@ parameters:
   type: string
 
 jobs:
-- job: Build and maybe publish
+- job: BuildAndPublish
   pool:
     vmImage: ${{ parameters.vmImage }}
   steps:
