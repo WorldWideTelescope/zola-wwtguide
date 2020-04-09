@@ -8,6 +8,10 @@ used by [AAS WorldWide Telescope] manuals and guides.
 
 **TODO:** More information will go here.
 
+The design and implementation of the movable sidebar is largely copied from
+the [mdBook] package.
+
+[mdBook]: https://github.com/rust-lang/mdBook
 
 ## Contributions
 

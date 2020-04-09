@@ -2,3 +2,32 @@
 {%- set page = get_page(path=path) -%}
 {{ page.permalink | safe }}
 {%- endmacro input -%}
+
+{%- macro current_page_nav(toc) -%}
+{% if toc %}
+  <details open>
+    <summary>In This Page</summary>
+
+    <nav role="navigation">
+      <ul>
+        {% for h1 in toc %}
+        <li>
+          <a href="{{h1.permalink | safe}}">{{ h1.title }}</a>
+          {% if h1.children %}
+          <ul>
+            {% for h2 in h1.children %}
+            <li>
+              <a href="{{h2.permalink | safe}}">{{ h2.title }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </details>
+
+  <hr />
+{% endif %}
+{%- endmacro current_page_nav %}

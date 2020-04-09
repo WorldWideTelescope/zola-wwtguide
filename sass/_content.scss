@@ -3,119 +3,117 @@
 // rules try to set up a nice, coherent appearance that will work well in a
 // variety of contexts.
 
-p {
-  // Note use of "em", not "rem", units here.
-  margin: 0.3em 0 1em 0;
-}
-
-img {
-  max-width: 100%;
-}
-
-li {
-  margin: 0.3rem 0;
-}
-
-pre {
-  font-size: 70%;
-  padding: 0.2rem;
-
-  @media screen and (max-width: $breakpoint) {
-    font-size: 50%;
-    padding: 0.1rem;
+.content {
+  p {
+    // Note use of "em", not "rem", units here.
+    margin: 0.3em 0 1em 0;
   }
-}
-
-blockquote {
-  font-size: 85%;
-  font-family: "Noto Sans";
-}
-
-hr {
-  margin: 1rem 2rem;
-}
-
-a {
-  color: #115;
-
-  &:hover {
-    color: #11D;
-  }
-}
-
-a.noul {
-  text-decoration: none;
-}
-
-.page-title {
-  font-size: 150%;
-  font-weight: 700;
-  line-height: 1;
-  margin: 0 0 1.2rem 0;
-}
-
-h1 {
-  // Keep this smaller than `.page-title`
-  font-size: 125%;
-  margin: 1.2rem 0 1rem 0;
-}
-
-h2 {
-  // Looks like we need to manually specify these font sizes to cascade down
-  // relative to h1.
-  font-size: 110%;
-  margin: 1.2rem 0 1rem 0;
-}
-
-h3, h4, h5, h6 {
-  // Todo: use techniques other than font-sizing to distinguish h4 and below
-  // from h3.
-  font-size: 100%;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1;
-}
-
-// Additional generic rules, for figures. Using `table` and `table-caption`
-// for display types makes it so that the caption never becomes wider than the
-// figure.
-
-figure {
-  display: table;
-  margin: 1.5rem auto 1.5rem auto;
-  max-width: 100%;
 
   img {
     max-width: 100%;
-    margin: 0;
   }
-}
 
-figcaption {
-  display: table-caption;
-  caption-side: bottom;
-  font-size: 70%;
-  font-style: italic;
-  margin-top: 0.2rem;
-}
+  li {
+    margin: 0.3rem 0;
+  }
 
-// We configure Zola to insert anchor links for headers in the Markdown.
-// These show up as `a.zola-anchor` tags inside the <hN> tag to the left
-// of the header text.
+  pre {
+    font-size: 70%;
+    padding: 0.2rem;
 
-a.zola-anchor {
-  visibility: hidden;
-  text-decoration: none;
-  font-size: 80%;
-  margin-left: 0.2em; // note: intentionally `em` here
-}
+    @media screen and (max-width: $breakpoint) {
+      font-size: 50%;
+      padding: 0.1rem;
+    }
+  }
 
-h1:hover a.zola-anchor,
-h2:hover a.zola-anchor,
-h3:hover a.zola-anchor,
-h4:hover a.zola-anchor,
-h5:hover a.zola-anchor,
-h6:hover a.zola-anchor {
-  visibility: visible;
+  blockquote {
+    font-size: 85%;
+    font-family: "Noto Sans";
+  }
+
+  hr {
+    margin: 1rem 2rem;
+  }
+
+  a {
+    color: #115;
+
+    &:hover {
+      color: #11D;
+    }
+  }
+
+  .page-title {
+    font-size: 150%;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 1.2rem 0;
+  }
+
+  h1 {
+    // Keep this smaller than `.page-title`
+    font-size: 125%;
+    margin: 1.2rem 0 1rem 0;
+  }
+
+  h2 {
+    // Looks like we need to manually specify these font sizes to cascade down
+    // relative to h1.
+    font-size: 110%;
+    margin: 1.2rem 0 1rem 0;
+  }
+
+  h3, h4, h5, h6 {
+    // Todo: use techniques other than font-sizing to distinguish h4 and below
+    // from h3.
+    font-size: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1;
+  }
+
+  // Additional generic rules, for figures. Using `table` and `table-caption`
+  // for display types makes it so that the caption never becomes wider than the
+  // figure.
+
+  figure {
+    display: table;
+    margin: 1.5rem auto 1.5rem auto;
+    max-width: 100%;
+
+    img {
+      max-width: 100%;
+      margin: 0;
+    }
+  }
+
+  figcaption {
+    display: table-caption;
+    caption-side: bottom;
+    font-size: 70%;
+    font-style: italic;
+    margin-top: 0.2rem;
+  }
+
+  // We configure Zola to insert anchor links for headers in the Markdown.
+  // These show up as `a.zola-anchor` tags inside the <hN> tag to the left
+  // of the header text.
+
+  a.zola-anchor {
+    visibility: hidden;
+    text-decoration: none;
+    font-size: 80%;
+    margin-left: 0.2em; // note: intentionally `em` here
+  }
+
+  h1:hover a.zola-anchor,
+  h2:hover a.zola-anchor,
+  h3:hover a.zola-anchor,
+  h4:hover a.zola-anchor,
+  h5:hover a.zola-anchor,
+  h6:hover a.zola-anchor {
+    visibility: visible;
+  }
 }

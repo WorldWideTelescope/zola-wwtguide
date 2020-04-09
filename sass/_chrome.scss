@@ -1,0 +1,168 @@
+// Styles for the generic elements included in every page through the templates.
+
+// Responsiveness/configurability bling
+
+:not(.sidebar-resizing) .page-wrapper {
+  transition: margin-left 0.3s ease, transform 0.3s ease;
+}
+
+:not(.sidebar-resizing) .sidebar {
+  transition: transform 0.3s ease;
+}
+
+
+// The sidebar
+
+.sidebar {
+  font-size: 80%;
+  line-height: 1;
+  background-color: $sidebar-bg-color;
+  border-right: 1px solid $edge-color;
+
+  a {
+    text-decoration: none;
+    color: $text-color;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+
+  .sidebar-logo {
+    display: block;
+    width: 260px;
+    height: 103px;
+    margin: 0 auto;
+    background-image: url('assets/stacked-logo-black-on-transparent-260x103.png');
+  }
+
+  hr {
+    margin: 0 1.2rem;
+    border-color: $rule-color;
+  }
+
+  details {
+    margin: 1rem;
+
+    summary {
+      font-weight: 700;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  nav ul {
+    list-style: square;
+    padding-left: 0.6rem;
+    margin: 0.2rem 0 0.2rem 0.7rem;
+
+    li {
+      margin: 0.1rem 0;
+    }
+
+    a.active {
+      font-weight: 700;
+    }
+  }
+
+  nav > ul {
+    margin: 0.5rem 0 0.3rem 0.6rem;
+  }
+
+  footer {
+    font-size: 80%;
+    margin: 1rem 10px 0 10px;
+    border-top: 1px solid $edge-color;
+    padding-top: 0.3rem;
+  }
+}
+
+
+// Fun with the sticky menu bar
+
+#menu-bar {
+  background-color: $background-color;
+  border-bottom: 1px solid $background-color;
+
+  h1 {
+    color: $deemph-color;
+  }
+}
+
+#menu-bar.bordered {
+  border-bottom-color: $edge-color;
+}
+
+#menu-bar.sticky,
+#menu-bar-hover-placeholder:hover + #menu-bar,
+.sidebar-visible #menu-bar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0 !important;
+}
+
+#menu-bar-hover-placeholder {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: $menu-bar-height;
+}
+
+#menu-bar i, #menu-bar .icon-button {
+  position: relative;
+  padding: 0 8px;
+  z-index: 10;
+  line-height: $menu-bar-height;
+  cursor: pointer;
+  transition: color 0.5s;
+}
+
+.icon-button {
+  border: none;
+  background: none;
+  padding: 0;
+  color: inherit;
+
+  i {
+    margin: 0;
+  }
+}
+
+.menu-bar {
+  i, .icon-button {
+    color: $deemph-color;
+  }
+
+  i:hover, .icon-button:hover {
+    color: $icon-hover-color;
+  }
+}
+
+.right-buttons {
+  margin: 0 15px;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.left-buttons {
+  display: flex;
+  margin: 0 5px;
+}
+
+.menu-title {
+  display: inline-block;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: $menu-bar-height;
+  text-align: center;
+  margin: 0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}

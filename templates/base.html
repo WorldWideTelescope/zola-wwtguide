@@ -1,6 +1,6 @@
 {%- import "macros.html" as macros -%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="sidebar-visible">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -10,95 +10,134 @@
     {% block js %}
     {% endblock js %}
     {% block css %}
-    <link rel="stylesheet" href="{{ get_url(path="wwtguide.css") | safe }}">
+    <link rel="stylesheet" href="{{ get_url(path='wwtguide.css') | safe }}">
+    <link rel="stylesheet" href="{{ get_url(path='assets/font-awesome.min.css') | safe }}">
     {% endblock css %}
     {% block extra_head %}
     {% endblock extra_head %}
   </head>
 
   <body>
-    <div class="header-bg">
-    </div>
+    <!-- Hide / unhide sidebar before it is displayed -->
+    <script type="text/javascript">
+      var html = document.querySelector('html');
 
-    <div class="wrapper">
-      <div class="hl-nav side-nav">
-        <div class="sidebar-scrollbox">
-          {% block before_menu %}
-          {% endblock before_menu %}
+      // XXXX hardcoding break size. Also, note that we use this variable in
+      // some inline JavaScript later in the file.
+      var sidebar = (document.body.clientWidth < 1080) ? 'hidden' : 'visible';
+      
+      if (sidebar === 'hidden') {
+        html.classList.remove('sidebar-visible');
+        html.classList.add("sidebar-hidden");
+      }
+    </script>
 
-          <p class="side-nav-label">Table of Contents</p>
+    <!-- The sidebar -->
+    <div id="sidebar" class="sidebar">
+      <div class="sidebar-scrollbox">
+        <!-- logo -->
+        <a class="sidebar-logo" href="//docs.worldwidetelescope.org/"></a>
+
+        <!-- table of contents -->
+        <details open>
+          <summary>Table of Contents</summary>
 
           <nav role="navigation">
             <ul>
-              {% block menu %}
-              {% set index = get_section(path="_index.md") %}
-              {% for page in index.pages %}
-              <li {% if current_path == page.path %}class="active"{% endif %}>
-                <a class="noul" href="{{ page.permalink }}">
-                  {% if config.extra.book_number_chapters %}<strong>{{ chapter_num }}.{{ loop.index }}.</strong>{% endif %}
-                  {{ page.title }}
-                </a>
+              <li>
+                <a {% if current_path == "/" %}class="active"{% endif %}
+                   href="{{ get_url(path="", trailing_slash=true) | safe }}">{{ config.title }}</a>
+                
+                <ul>
+                  {% set index = get_section(path="_index.md") %}
+                  {% for page in index.pages %}
+                  <li>
+                    <a {% if current_path == page.path %}class="active"{% endif %}
+                       href="{{ page.permalink | safe }}">{{ page.title }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
               </li>
-              {% endfor %}
-              {% endblock menu %}
             </ul>
           </nav>
-          {% block after_menu %}
-          {% endblock after_menu %}
-        </div>
-      </div>
+        </details>
 
-      <div class="content-col">
-        <header>
-          <a href="{{ get_url(path="", trailing_slash=true) | safe }}">
-            <img class="header-logo-lg" src="{{ get_url(path='assets/stacked-logo-black-on-transparent-260x103.png') | safe }}">
-            <img class="header-logo-sm" src="{{ get_url(path='assets/wwt-globe.png') | safe }}">
-          </a>
-        </header>
+        <hr/>
 
-        <div class="mobile-sidebar-controls">
-          <a id="hl-furl-btn" class="pull-left noul" href="#">« Table of Contents</a>
-          <a id="ll-furl-btn" class="pull-right noul" href="#">In This Page »</a>
-        </div>
+        <!-- "On this page" nav goes here if it's defined -->
+        {% block cur_page_nav %}
+        {% endblock cur_page_nav %}
 
-        <script>
-          document.querySelector("#hl-furl-btn").addEventListener("click", function() {
-            document.querySelector(".hl-nav").classList.toggle("unfurled");
-          });
-          document.querySelector("#ll-furl-btn").addEventListener("click", function() {
-            document.querySelector(".ll-nav").classList.toggle("unfurled");
-          });
-        </script>
+        <!-- resources -->
+        <details open>
+          <summary>Resources</summary>
 
-        <main>
-        {% block content %}
-        {% endblock content %}
-        </main>
+          <nav role="navigation">
+            <ul>
+              <li><a href="{{ config.extra.github_base }}">GitHub Repository</a></li>
+              <li><a href="//docs.worldwidetelescope.org/">WWT Docs Home</a></li>
+              <li><a href="//worldwidetelescope.org/About">About WWT</a></li>
+              <li><a href="//aas.org/about-aas">About AAS</a></li>
+            </ul>
+          </nav>
+        </details>
 
-        <div class="prev-link">
-          {% block prev_link %}
-          {% endblock prev_link %}
-        </div>
-
-        <div class="next-link">
-          {% block next_link %}
-          {% endblock next_link %}
-        </div>
-
+        <!-- footer -->
         <footer>
-          <p>Copyright {{ now() | date(format="%Y") }} AAS. Site generated
-            with <a href="https://www.getzola.org/">Zola</a>.</p>
+          Copyright {{ now() | date(format="%Y") }} <a href="https://aas.org/">AAS</a>. HTML generated
+          with <a href="https://www.getzola.org/">Zola</a>.
         </footer>
       </div>
+    </div>
 
-      <div class="ll-nav side-nav">
-        <div class="sidebar-scrollbox">
-          {% block lowlevelnav %}
-          {% endblock %}
+    <!-- Main page -->
+    <div id="page-wrapper" class="page-wrapper">
+      <div class="page">
+        <!-- Top menu bar -->
+        <div id="menu-bar-hover-placeholder"></div>
+
+        <div id="menu-bar" class="menu-bar sticky">
+          <div class="left-buttons">
+            <button id="sidebar-toggle" class="icon-button" type="button"
+                    title="Toggle Sidebar" aria-label="Toggle Sidebar" aria-controls="sidebar">
+              <i class="fa fa-bars"></i>
+            </button>
+          </div>
+
+          <h1 class="menu-title">{{ config.title }}</h1>
+
+          <div class="right-buttons">
+            <a href="{{config.extra.github_base}}" title="Git repository" aria-label="Git repository">
+              <i id="git-repository-button" class="fa fa-github"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+        <script type="text/javascript">
+          document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+          document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+          Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+            link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+          });
+
+          // Default to collapsing the nav categories in sidebar-hidden (~mobile) mode
+          if (sidebar !== 'visible') {
+            Array.from(document.querySelectorAll("#sidebar details")).forEach(function (d) {
+              d.removeAttribute("open");
+            });
+          }
+        </script>
+
+        <!-- Actual content! -->
+        <div id="content" class="content">
+          <main>
+            {% block content %}
+            {% endblock content %}
+          </main>
         </div>
       </div>
-
-    </div> <!-- .wrapper -->
+    </div>
 
     {% block js_body %}
     <script type="text/javascript" src="{{ get_url(path='assets/wwtguide.js') | safe }}"></script>

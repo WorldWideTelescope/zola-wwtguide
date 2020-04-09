@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block cur_page_nav %}
+{{ macros::current_page_nav(toc=section.toc) }}
+{% endblock %}
+
 {% block content %}
     <h1>{{ section.title }}</h1>
     {{ section.content | safe }}
