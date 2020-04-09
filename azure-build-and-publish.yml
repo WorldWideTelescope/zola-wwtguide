@@ -3,10 +3,22 @@
 # repository as a Git submodule, Azure Pipelines doesn't support that, so it
 # is possible that the version of this file used by Pipelines won't be in sync
 # with what the guide repository expects.
+#
+# This pipeline has to run on Windows in order to take advantage of the
+# AzureFileCopy task.
 
 parameters:
+- name: 'azureServiceConnectionName'
+  type: string
+- name: 'containerName'
+  default: '$web'
+  type: string
+- name: 'pubPrefix'
+  type: string
+- name: 'storageAccountName'
+  type: string
 - name: 'vmImage'
-  default: 'ubuntu 16.04'
+  default: 'windows-latest'
   type: string
 - name: 'zolaVersion'
   default: '0.10.1'
@@ -21,10 +33,30 @@ jobs:
   - checkout: self
     submodules: recursive
 
-  - script: |
-      curl -fsSL https://github.com/getzola/zola/releases/download/v${{ parameters.zolaVersion }}/zola-v${{ parameters.zolaVersion }}-x86_64-unknown-linux-gnu.tar.gz |tar xz
+  - powershell: |
+      $u = 'https://github.com/getzola/zola/releases/download/v${{ parameters.zolaVersion }}/zola-v${{ parameters.zolaVersion }}-x86_64-pc-windows-msvc.zip'
+      Invoke-WebRequest -Uri $u -OutFile zola.zip
+
+      Add-Type -assembly "System.IO.Compression.Filesystem";
+      [IO.Compression.Zipfile]::ExtractToDirectory("zola.zip", ".");
     displayName: Install Zola
 
-  - script: |
-      ./zola build
+  - powershell: |
+      .\zola.exe build -o $(build.artifactStagingDirectory)
     displayName: Build site
+
+  - task: PublishPipelineArtifact@0
+    displayName: Publish site as artifact
+    inputs:
+      artifactName: static-site
+      targetPath: $(Build.ArtifactStagingDirectory)
+
+  - task: AzureFileCopy@3
+    displayName: Upload to Azure Storage
+    inputs:
+      SourcePath: '$(build.artifactStagingDirectory)'
+      azureSubscription: ${{ parameters.azureServiceConnectionName }}
+      Destination: 'AzureBlob'
+      storage: ${{ parameters.storageAccountName }}
+      ContainerName: ${{ parameters.containerName }}
+      blobPrefix: ${{ parameters.pubPrefix }}
