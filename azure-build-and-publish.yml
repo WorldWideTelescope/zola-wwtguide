@@ -19,7 +19,7 @@ jobs:
   steps:
 
   - script: |
-      curl https://github.com/getzola/zola/releases/download/v${{ parameters.zolaVersion }}/zola-v${{ parameters.zolaVersion }}-x86_64-unknown-linux-gnu.tar.gz |tar xz
+      curl -fsSL https://github.com/getzola/zola/releases/download/v${{ parameters.zolaVersion }}/zola-v${{ parameters.zolaVersion }}-x86_64-unknown-linux-gnu.tar.gz |tar xz
     displayName: Install Zola
 
   - script: |
