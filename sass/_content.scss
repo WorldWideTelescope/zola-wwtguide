@@ -74,6 +74,12 @@
     line-height: 1;
   }
 
+  // Some application-specific styles
+
+  .uipath {
+    color: #f000f0;
+  }
+
   // Additional generic rules, for figures. Using `table` and `table-caption`
   // for display types makes it so that the caption never becomes wider than the
   // figure.
