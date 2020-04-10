@@ -41,24 +41,3 @@
         {% endfor %}
     {% endif %}
 {% endblock next_link %}
-
-{% block lowlevelnav %}
-<p class="side-nav-label">In This Page</p>
-
-<ul>
-  {% for h1 in page.toc %}
-  <li>
-    <a class="noul" href="{{h1.permalink | safe}}">{{ h1.title }}</a>
-    {% if h1.children %}
-    <ul>
-      {% for h2 in h1.children %}
-      <li>
-        <a class="noul" href="{{h2.permalink | safe}}">{{ h2.title }}</a>
-      </li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-  </li>
-  {% endfor %}
-</ul>
-{% endblock %}
