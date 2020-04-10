@@ -11,12 +11,16 @@ parameters:
 - name: 'azureServiceConnectionName'
   type: string
 - name: 'cdnProfileName'
+  default: 'skip'
   type: string
 - name: 'cdnPubPrefix'
+  default: 'unspecified'
   type: string
 - name: 'cdnEndpointName'
+  default: 'unspecified'
   type: string
 - name: 'cdnResourceGroupName'
+  default: 'unspecified'
   type: string
 - name: 'containerName'
   default: '$web'
