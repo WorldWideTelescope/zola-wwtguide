@@ -72,6 +72,7 @@ jobs:
 
   - task: AzurePowerShell@4
     displayName: Purge CDN
+    condition: and(succeeded(), ne('${{ parameters.cdnProfileName }}', 'skip'))
     inputs:
       azureSubscription: ${{ parameters.azureServiceConnectionName }}
       azurePowerShellVersion: 'LatestVersion'
