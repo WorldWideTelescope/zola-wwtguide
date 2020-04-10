@@ -50,8 +50,9 @@ jobs:
     displayName: Install Zola
 
   - powershell: |
+      .\zola.exe check
       .\zola.exe build -o $(build.artifactStagingDirectory)
-    displayName: Build site
+    displayName: Check and build site
 
   - task: PublishPipelineArtifact@0
     displayName: Publish site as artifact
