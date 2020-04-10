@@ -1,0 +1,8 @@
+<div class="callout callout-warning">
+  <i class="callout-icon fa fa-exclamation-circle" aria-hidden="true"></i>
+  {% if html %}
+  {{ body | safe }}
+  {% else %}
+  {{ body }}
+  {% endif %}
+</div>

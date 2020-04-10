@@ -122,4 +122,35 @@
   h6:hover a.zola-anchor {
     visibility: visible;
   }
+
+  // Callouts
+
+  .callout {
+    margin: 1.3rem 0;
+    padding: 0.5rem 0.7rem 0.5rem 2rem;
+    background-color: $callout-bg-color;
+    position: relative;
+
+    .callout-icon {
+      position: absolute;
+      top: 0.65rem;
+      left: 0.5rem;
+    }
+  }
+
+  .callout-note {
+    border-left: 4px solid $callout-note-color;
+
+    .callout-icon {
+      color: $callout-note-color;
+    }
+  }
+
+  .callout-warning {
+    border-left: 4px solid $callout-warning-color;
+
+    .callout-icon {
+      color: $callout-warning-color;
+    }
+  }
 }
