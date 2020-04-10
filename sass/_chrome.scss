@@ -170,3 +170,28 @@
 .content .index-spacer {
   margin-top: 2rem;
 }
+
+
+// Prev/next buttons
+
+.prevnext-link {
+  margin: 1rem;
+
+  a {
+    font-weight: 700;
+    text-decoration: none;
+    color: $text-color;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+}
+
+.prev-link {
+  float: left;
+}
+
+.next-link {
+  float: right;
+}

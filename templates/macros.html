@@ -31,3 +31,11 @@
   <hr />
 {% endif %}
 {%- endmacro current_page_nav %}
+
+{%- macro nav_prev_item(rel_top, title, path) -%}
+<a class="prev" href="{{ rel_top ~ path }}">« {{title}}</a>
+{%- endmacro nav_prev_item -%}
+
+{%- macro nav_next_item(rel_top, title, path) -%}
+<a class="next" href="{{ rel_top ~ path }}">{{title}} »</a>
+{%- endmacro nav_next_item -%}

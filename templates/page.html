@@ -11,17 +11,17 @@
 
 {% block prev_link %}
     {% if page.lighter %}
-        <a class="previous" href="{{ page.lighter.permalink }}"><</a>
+        {{ macros::nav_prev_item(rel_top=rel_top, title=page.lighter.title, path=page.lighter.path) }}
     {% else %}
         {# No page before, find the link for the section it is in if there is one #}
         {% set parent = get_section(path=page.ancestors | reverse | first) %}
-        <a class="previous" href="{{ parent.permalink }}"><</a>
+        {{ macros::nav_prev_item(rel_top=rel_top, title=parent.title, path=parent.path) }}
     {% endif %}
 {% endblock prev_link %}
 
 {% block next_link %}
     {% if page.heavier %}
-        <a class="next" href="{{ page.heavier.permalink }}">></a>
+        {{ macros::nav_next_item(rel_top=rel_top, title=page.heavier.title, path=page.heavier.path) }}
     {% else %}
         {# No page after, find the link for the following section #}
         {% set index = get_section(path="_index.md") %}
@@ -29,7 +29,7 @@
         {% for s in index.subsections %}
             {% set subsection = get_section(path=s) %}
             {% if found_current %}
-                <a class="next" href="{{ subsection.permalink }}">></a>
+                {{ macros::nav_next_item(rel_top=rel_top, title=subsection.title, path=subsection.path) }}
                 {# no break #}
                 {% set_global found_current = false %}
             {% endif %}
