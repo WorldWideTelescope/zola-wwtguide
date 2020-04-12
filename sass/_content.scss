@@ -103,6 +103,22 @@
     margin-top: 0.2rem;
   }
 
+  // Tables
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+
+    tbody tr:nth-child(odd) {
+      background-color: $callout-bg-color;
+    }
+  }
+
+  th, td {
+    padding: 4px;
+  }
+
   // We configure Zola to insert anchor links for headers in the Markdown.
   // These show up as `a.zola-anchor` tags inside the <hN> tag to the left
   // of the header text.
