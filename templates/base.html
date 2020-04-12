@@ -61,12 +61,32 @@
 
                 <ul>
                   {% set index = get_section(path="_index.md") %}
-                  {% for page in index.pages %}
-                  <li>
-                    <a {% if current_path == page.path %}class="active"{% endif %}
-                       href="{{ rel_top ~ page.path | safe }}">{{ page.title }}</a>
-                  </li>
-                  {% endfor %}
+                  {% if index.subsections %}
+                    {% for ss_name in index.subsections %}
+                    {% set ss = get_section(path=ss_name) %}
+                    <li>
+                      <a {% if current_path == ss.path %}class="active"{% endif %}
+                         href="{{ rel_top ~ ss.path | safe }}">{{ ss.title }}</a>
+                      {% if ss.pages %}
+                      <ul>
+                        {% for page in ss.pages %}
+                        <li>
+                          <a {% if current_path == page.path %}class="active"{% endif %}
+                             href="{{ rel_top ~ page.path | safe }}">{{ page.title }}</a>
+                        </li>
+                        {% endfor %}
+                      </ul>
+                      {% endif %}
+                    </li>
+                    {% endfor %}
+                  {% else %}
+                    {% for page in index.pages %}
+                    <li>
+                      <a {% if current_path == page.path %}class="active"{% endif %}
+                         href="{{ rel_top ~ page.path | safe }}">{{ page.title }}</a>
+                    </li>
+                    {% endfor %}
+                  {% endif %}
                 </ul>
               </li>
             </ul>
