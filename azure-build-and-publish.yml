@@ -55,8 +55,11 @@ jobs:
 
   - powershell: |
       .\zola.exe check
+    displayName: Check site
+
+  - powershell: |
       .\zola.exe build -o $(build.artifactStagingDirectory)
-    displayName: Check and build site
+    displayName: Build site
 
   - task: PublishPipelineArtifact@0
     displayName: Publish site as artifact
