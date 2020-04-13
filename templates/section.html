@@ -40,17 +40,23 @@
     {% else %}
         {# No page in the section, find the link for the following section #}
         {% set index = get_section(path="_index.md") %}
-        {% set found_current = false %}
-        {% for s in index.subsections %}
-            {% set subsection = get_section(path=s) %}
-            {% if found_current %}
-                {{ macros::nav_next_item(rel_top=rel_top, title=subsection.title, path=subsection.path) }}
-                {# no break #}
-                {% set_global found_current = false %}
-            {% endif %}
-            {% if subsection.permalink == section.permalink %}
-                {% set_global found_current = true %}
-            {% endif %}
-        {% endfor %}
+        {% if current_path == "/" %}
+            {# Is this the root section, and it has no pages? Start at the beginning. #}
+            {% set subsection = get_section(path=index.subsections[0]) %}
+            {{ macros::nav_next_item(rel_top=rel_top, title=subsection.title, path=subsection.path) }}
+        {% else %}
+            {% set found_current = false %}
+            {% for s in index.subsections %}
+                {% set subsection = get_section(path=s) %}
+                {% if found_current %}
+                    {{ macros::nav_next_item(rel_top=rel_top, title=subsection.title, path=subsection.path) }}
+                    {# no break #}
+                    {% set_global found_current = false %}
+                {% endif %}
+                {% if subsection.permalink == section.permalink %}
+                    {% set_global found_current = true %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     {% endif %}
 {% endblock next_link %}
