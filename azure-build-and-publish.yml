@@ -53,9 +53,10 @@ jobs:
       [IO.Compression.Zipfile]::ExtractToDirectory("zola.zip", ".");
     displayName: Install Zola
 
-  - powershell: |
-      .\zola.exe check
-    displayName: Check site
+  # The check is failing spuriously on Azure Pipelines too often right now (2020 Apr).
+  # - powershell: |
+  #     .\zola.exe check
+  #   displayName: Check site
 
   - powershell: |
       .\zola.exe build -o $(build.artifactStagingDirectory)
