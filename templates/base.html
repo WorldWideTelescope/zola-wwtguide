@@ -49,6 +49,11 @@
     {% block css %}
     <link rel="stylesheet" href="{{ rel_top ~ 'wwtguide.css' | safe }}">
     <link rel="stylesheet" href="{{ rel_top ~ 'assets/font-awesome.min.css' | safe }}">
+    {% if config.extra.stylesheets %}
+    {% for stylesheet in config.extra.stylesheets %}
+        <link rel="stylesheet" href="{{ rel_top ~ stylesheet | safe }}">
+    {% endfor %}
+    {% endif %}
     {% endblock css %}
     {% block extra_head %}
     {% endblock extra_head %}
