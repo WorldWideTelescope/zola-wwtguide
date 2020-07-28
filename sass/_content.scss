@@ -21,6 +21,10 @@
     font-size: 70%;
     padding: 0.2rem;
 
+    // If too wide, don't force the container to be bigger
+    max-width: 100%;
+    overflow-x: auto;
+
     @media screen and (max-width: $breakpoint) {
       font-size: 50%;
       padding: 0.1rem;
