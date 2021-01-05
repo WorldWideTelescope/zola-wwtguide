@@ -4,7 +4,7 @@
   {%- set_global rel_top = "./" -%}
 {%- else -%}
   {%- set_global rel_top_work = [] -%}
-  {%- for _ignored in current_path | split(pat="/") | slice(start=1) -%}
+  {%- for _ignored in current_path | trim_end_matches(pat="/") | split(pat="/") | slice(start=1) -%}
     {%- set_global rel_top_work = rel_top_work | concat(with="..") -%}
   {%- endfor -%}
   {%- set_global rel_top = rel_top_work | join(sep="/") -%}
