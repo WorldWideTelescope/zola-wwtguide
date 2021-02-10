@@ -1,14 +1,13 @@
 {%- import "macros.html" as macros -%}
 {# Jumping through hoops to get a relative path to the site root #}
 {%- if current_path == "/" -%}
-  {%- set_global rel_top = "./" -%}
+  {%- set_global rel_top = "." -%}
 {%- else -%}
   {%- set_global rel_top_work = [] -%}
   {%- for _ignored in current_path | trim_end_matches(pat="/") | split(pat="/") | slice(start=1) -%}
     {%- set_global rel_top_work = rel_top_work | concat(with="..") -%}
   {%- endfor -%}
   {%- set_global rel_top = rel_top_work | join(sep="/") -%}
-  {%- set_global rel_top = rel_top ~ "/" -%}
 {%- endif -%}
 <!DOCTYPE html>
 <html lang="en" class="sidebar-visible">
@@ -47,11 +46,11 @@
     {% block js %}
     {% endblock js %}
     {% block css %}
-    <link rel="stylesheet" href="{{ rel_top ~ 'wwtguide.css' | safe }}">
-    <link rel="stylesheet" href="{{ rel_top ~ 'assets/font-awesome.min.css' | safe }}">
+    <link rel="stylesheet" href="{{ rel_top ~ '/wwtguide.css' | safe }}">
+    <link rel="stylesheet" href="{{ rel_top ~ '/assets/font-awesome.min.css' | safe }}">
     {% if config.extra.stylesheets %}
     {% for stylesheet in config.extra.stylesheets %}
-        <link rel="stylesheet" href="{{ rel_top ~ stylesheet | safe }}">
+        <link rel="stylesheet" href="{{ rel_top ~ '/' ~ stylesheet | safe }}">
     {% endfor %}
     {% endif %}
     {% endblock css %}
@@ -88,7 +87,7 @@
             <ul>
               <li>
                 <a {% if current_path == "/" %}class="active"{% endif %}
-                   href="{{ rel_top | safe }}">{{ config.title }}</a>
+                   href="{{ rel_top ~ '/' | safe }}">{{ config.title }}</a>
 
                 <ul>
                   {% set index = get_section(path="_index.md") %}
@@ -213,7 +212,7 @@
     </div>
 
     {% block js_body %}
-    <script type="text/javascript" src="{{ rel_top ~ 'assets/wwtguide.js' | safe }}"></script>
+    <script type="text/javascript" src="{{ rel_top ~ '/assets/wwtguide.js' | safe }}"></script>
     {% endblock js_body %}
   </body>
 </html>
