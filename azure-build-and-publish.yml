@@ -45,7 +45,7 @@ jobs:
   - checkout: self
     submodules: recursive
 
-  - powershell: |
+  - pwsh: |
       $u = 'https://github.com/getzola/zola/releases/download/v${{ parameters.zolaVersion }}/zola-v${{ parameters.zolaVersion }}-x86_64-pc-windows-msvc.zip'
       Invoke-WebRequest -Uri $u -OutFile zola.zip
 
@@ -54,12 +54,12 @@ jobs:
     displayName: Install Zola
 
   # The check is failing spuriously on Azure Pipelines too often right now (2020 Apr).
-  # - powershell: |
+  # - pwsh: |
   #     .\zola.exe check
   #   displayName: Check site
 
   # The "echo" gets past a Zola confirmation to blow away the output directory:
-  - powershell: |
+  - pwsh: |
       echo y |.\zola.exe build -o $(build.artifactStagingDirectory)
     displayName: Build site
 
