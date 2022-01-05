@@ -58,8 +58,9 @@ jobs:
   #     .\zola.exe check
   #   displayName: Check site
 
+  # The "echo" gets past a Zola confirmation to blow away the output directory:
   - powershell: |
-      .\zola.exe build -o $(build.artifactStagingDirectory)
+      echo y |.\zola.exe build -o $(build.artifactStagingDirectory)
     displayName: Build site
 
   - task: PublishPipelineArtifact@0
