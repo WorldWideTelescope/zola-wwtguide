@@ -87,8 +87,8 @@ jobs:
       azurePowerShellVersion: 'LatestVersion'
       scriptType: 'inlineScript'
       inline: |
-        Unpublish-AzCdnEndpointContent `
+        Clear-AzCdnEndpointContent `
           -ProfileName ${{ parameters.cdnProfileName }} `
           -ResourceGroupName ${{ parameters.cdnResourceGroupName }} `
           -EndpointName ${{ parameters.cdnEndpointName }} `
-          -PurgeContent '${{ parameters.cdnPubPrefix }}/*'
+          -ContentPath @('${{ parameters.cdnPubPrefix }}/*')
