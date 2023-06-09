@@ -1,17 +1,34 @@
+[![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](http://numfocus.org)
+
 # zola-wwtguide
 
 This repository contains a theme for the [Zola] static site generator
-used by [AAS WorldWide Telescope] manuals and guides.
+used by [WorldWide Telescope] manuals and guides.
 
 [Zola]: https://getzola.org/
-[AAS WorldWide Telescope]: https://worldwidetelescope.org/
-
-**TODO:** More information will go here.
+[WorldWide Telescope]: https://worldwidetelescope.org/
 
 The design and implementation of the movable sidebar is largely copied from
 the [mdBook] package.
 
 [mdBook]: https://github.com/rust-lang/mdBook
+
+[//]: # (numfocus-fiscal-sponsor-attribution)
+
+The WorldWide Telescope project uses an [open governance
+model](https://worldwidetelescope.org/about/governance/) and is fiscally
+sponsored by [NumFOCUS](https://numfocus.org/). Consider making a
+[tax-deductible donation](https://numfocus.org/donate-for-worldwide-telescope)
+to help the project pay for developer time, professional services, travel,
+workshops, and a variety of other needs.
+
+<div align="center">
+  <a href="https://numfocus.org/donate-for-worldwide-telescope">
+    <img height="60px"
+         src="https://raw.githubusercontent.com/numfocus/templates/master/images/numfocus-logo.png">
+  </a>
+</div>
+
 
 ## Contributions
 
@@ -24,24 +41,18 @@ communities must abide by the [WWT Code of Conduct].
 [WWT Code of Conduct]: https://worldwidetelescope.github.io/code-of-conduct/
 
 
+## Acknowledgments
+
+Work on the WorldWide Telescope system has been supported by the [American
+Astronomical Society] (AAS), the [.NET Foundation], and other partners. See [the
+WWT user website][acks] for details.
+
+[American Astronomical Society]: https://aas.org/
+[.NET Foundation]: https://dotnetfoundation.org/
+[acks]: https://worldwidetelescope.org/about/acknowledgments/
+
+
 ## Legalities
 
 The code in this package is copyright the .NET Foundation. It is licensed
 under the [MIT License](./LICENSE).
-
-
-## Acknowledgments
-
-This package is part of the AAS WorldWide Telescope system, a
-[.NET Foundation] project managed by the non-profit
-[American Astronomical Society] (AAS). Work on WWT has been supported by the
-AAS, the US [National Science Foundation] (grants [1550701] and [1642446]),
-the [Gordon and Betty Moore Foundation], and [Microsoft].
-
-[.NET Foundation]: https://dotnetfoundation.org/
-[American Astronomical Society]: https://aas.org/
-[National Science Foundation]: https://www.nsf.gov/
-[1550701]: https://www.nsf.gov/awardsearch/showAward?AWD_ID=1550701
-[1642446]: https://www.nsf.gov/awardsearch/showAward?AWD_ID=1642446
-[Gordon and Betty Moore Foundation]: https://www.moore.org/
-[Microsoft]: https://www.microsoft.com/
